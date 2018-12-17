@@ -1,6 +1,6 @@
-from keras.layers import *
-from keras.regularizers import *
-from keras.models import *
+from tensorflow.keras.layers import *
+from tensorflow.keras.regularizers import *
+from tensorflow.keras.models import *
 from layers.context2query_attention import context2query_attention
 from layers.multihead_attention import Attention as MultiHeadAttention
 from layers.position_embedding import Position_Embedding as PositionEmbedding
@@ -10,9 +10,9 @@ from layers.QAoutputBlock import QAoutputBlock
 from layers.BatchSlice import BatchSlice
 from layers.DepthwiseConv1D import DepthwiseConv1D
 from layers.LabelPadding import LabelPadding
-from keras.initializers import VarianceScaling
+from tensorflow.keras.initializers import VarianceScaling
 import tensorflow as tf
-import keras.backend as K
+import tensorflow.keras.backend as K
 
 regularizer = l2(3e-7)
 init = VarianceScaling(scale=1.0, mode='fan_avg', distribution='uniform')

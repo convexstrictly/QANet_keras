@@ -1,7 +1,7 @@
 # ! -*- coding: utf-8 -*-
-from keras.engine.topology import Layer
+from tensorflow.keras.layers import Layer
 import tensorflow as tf
-import keras.backend as K
+import tensorflow.keras.backend as K
 
 class LayerDropout(Layer):
     def __init__(self, dropout = 0.0, **kwargs):

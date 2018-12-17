@@ -1,7 +1,7 @@
 # ! -*- coding: utf-8 -*-
 
-from keras import backend as K
-from keras.engine.topology import Layer
+from tensorflow.keras import backend as K
+from tensorflow.keras.layers import Layer
 import tensorflow as tf
 
 

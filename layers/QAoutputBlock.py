@@ -1,8 +1,8 @@
 # ! -*- coding: utf-8 -*-
-from keras.engine.topology import Layer
-from keras.regularizers import *
+from tensorflow.keras.layers import Layer
+from tensorflow.keras.regularizers import *
 import tensorflow as tf
-import keras.backend as K
+import tensorflow.keras.backend as K
 
 class QAoutputBlock(Layer):
     def __init__(self, ans_limit=30, **kwargs):

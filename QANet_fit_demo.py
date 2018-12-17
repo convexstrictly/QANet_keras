@@ -1,5 +1,5 @@
-from keras.optimizers import *
-from keras.initializers import *
+from tensorflow.keras.optimizers import *
+from tensorflow.keras.initializers import *
 from QANet_keras import QANet
 from collections import namedtuple
 import numpy as np

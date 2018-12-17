@@ -1,7 +1,7 @@
-from keras.engine.topology import Layer
-from keras.engine.topology import Layer
-from keras.initializers import VarianceScaling
-from keras.regularizers import *
+from tensorflow.keras.layers import Layer
+from tensorflow.keras.layers import Layer
+from tensorflow.keras.initializers import VarianceScaling
+from tensorflow.keras.regularizers import *
 from tensorflow.keras import backend as K
 import tensorflow as tf
 
