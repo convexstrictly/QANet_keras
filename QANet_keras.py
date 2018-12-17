@@ -72,6 +72,7 @@ def QANet(config, word_mat=None, char_mat=None, cove_model=None):
     word_dim = config.word_dim
     char_dim = config.char_dim
     cont_limit = config.cont_limit
+    ques_limit = config.ques_limit
     char_limit = config.char_limit
     ans_limit = config.ans_limit
     filters = config.filters
@@ -79,10 +80,10 @@ def QANet(config, word_mat=None, char_mat=None, cove_model=None):
     dropout = config.dropout
 
     # Input Embedding Layer
-    contw_input_ = Input((None,))
-    quesw_input_ = Input((None,))
-    contc_input_ = Input((None, char_limit))
-    quesc_input_ = Input((None, char_limit))
+    contw_input_ = Input((cont_limit,))
+    quesw_input_ = Input((ques_limit,))
+    contc_input_ = Input((cont_limit, char_limit))
+    quesc_input_ = Input((ques_limit, char_limit))
 
     # get mask
     c_mask = Lambda(lambda x: tf.cast(x, tf.bool))(contw_input_)  # [bs, c_len]
