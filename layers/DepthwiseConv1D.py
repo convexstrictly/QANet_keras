@@ -1,6 +1,7 @@
 from keras.engine.topology import Layer
 from keras.initializers import VarianceScaling
 from keras.regularizers import *
+from tensorflow.keras import backend as K
 import tensorflow as tf
 
 
@@ -12,6 +13,7 @@ class DepthwiseConv1D(Layer):
         super(DepthwiseConv1D, self).__init__(**kwargs)
 
     def build(self, input_shape):
+        input_shape = input_shape.as_list()
         init_relu = VarianceScaling(scale=2.0, mode='fan_in', distribution='normal')
         self.depthwise_w = self.add_weight("depthwise_filter",
                                            shape=(self.kernel_size, 1, input_shape[-1], 1),
@@ -44,3 +46,12 @@ class DepthwiseConv1D(Layer):
 
     def compute_output_shape(self, input_shape):
         return input_shape
+
+    def get_config(self):
+      config = {
+          'kernel_size': self.kernel_size,
+          'filter': self.filter,
+      }
+      base_config = super(DepthwiseConv1D, self).get_config()
+      return dict(list(base_config.items()) + list(config.items()))
+     

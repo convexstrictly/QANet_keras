@@ -1,7 +1,10 @@
 from keras.engine.topology import Layer
+from keras.engine.topology import Layer
 from keras.initializers import VarianceScaling
 from keras.regularizers import *
+from tensorflow.keras import backend as K
 import tensorflow as tf
+
 
 
 class context2query_attention(Layer):
@@ -15,6 +18,7 @@ class context2query_attention(Layer):
 
     def build(self, input_shape):
         # input_shape: [(None, ?, 128), (None, ?, 128)]
+        input_shape = [x.as_list() for x in input_shape]
         init = VarianceScaling(scale=1.0, mode='fan_avg', distribution='uniform')
         self.W0 = self.add_weight(name='W0',
                                   shape=(input_shape[0][-1], 1),
@@ -45,8 +49,8 @@ class context2query_attention(Layer):
     def call(self, x, mask=None):
         x_cont, x_ques, c_mask, q_mask = x
         # get similarity matrix S
-        subres0 = K.tile(K.dot(x_cont, self.W0), [1, 1, self.q_maxlen])
-        subres1 = K.tile(K.permute_dimensions(K.dot(x_ques, self.W1), pattern=(0, 2, 1)), [1, self.c_maxlen, 1])
+        subres0 = tf.tile(K.dot(x_cont, self.W0), [1, 1, self.q_maxlen])
+        subres1 = tf.tile(K.permute_dimensions(K.dot(x_ques, self.W1), pattern=(0, 2, 1)), [1, self.c_maxlen, 1])
         subres2 = K.batch_dot(x_cont * self.W2, K.permute_dimensions(x_ques, pattern=(0, 2, 1)))
         S = subres0 + subres1 + subres2
         S += self.bias
@@ -62,3 +66,13 @@ class context2query_attention(Layer):
 
     def compute_output_shape(self, input_shape):
         return (input_shape[0][0], input_shape[0][1], self.output_dim)
+
+    def get_config(self):
+      config = {
+          'output_dim': self.output_dim,
+          'c_maxlen': self.c_maxlen,
+          'q_maxLen': self.q_maxLen,
+          'dropout': self.dropout,           
+      }
+      base_config = super(DepthwiseConv1D, self).get_config()
+      return dict(list(base_config.items()) + list(config.items()))    

@@ -1,10 +1,12 @@
 from keras.optimizers import *
 from keras.initializers import *
 from QANet_keras import QANet
+from collections import namedtuple
+import numpy as np
 
 embedding_matrix = np.random.random((10000, 300))
 embedding_matrix_char = np.random.random((1233, 64))
-config = {
+config_dict = {
     'word_dim': 300,
     'char_dim': 64,
     'cont_limit': 400,
@@ -22,6 +24,8 @@ config = {
     'path': 'QA001',
     'use_cove': True
 }
+Config = namedtuple('Config', config_dict.keys())
+config = Config(*config_dict.values())
 model = QANet(config, word_mat=embedding_matrix, char_mat=embedding_matrix_char)
 model.summary()
 
